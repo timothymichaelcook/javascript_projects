@@ -18,10 +18,10 @@
 // *Start code*
 // 1.1
 const getUserChoice = userInput => {
-  // if (!typeof userInput === 'string') {
-  //   console.log('Invalid');
-  //   return false;
-  // }
+  if (typeof userInput !== 'string') {
+    console.log('Invalid');
+    return false;
+  }
   userInput = userInput.toLowerCase();
   if (userInput === 'rock' || userInput === 'paper' || userInput === 'scissors' || userInput === 'bomb') {
     return userInput;
@@ -36,7 +36,7 @@ console.log(getUserChoice('paper'));
 console.log(getUserChoice('papers'));
 
 // 2.1
-const getComputerChoice = () => {
+const getComputerChoice = function () {
     const randomNumber = Math.floor(Math.random() * 3); // 0 <= randomNumber < 1
     switch (randomNumber) {
       case 0:
@@ -46,7 +46,7 @@ const getComputerChoice = () => {
       case 2:
         return 'scissors';
     }
-  }
+}
 // const getComputerChoice = () => {
 //   const randomNumber = Math.floor(Math.random() * 6); // 0 <= randomNumber < 1
 //   switch (randomNumber) {
@@ -74,38 +74,51 @@ const determineWinner = (userChoice, computerChoice) => {
   if (userChoice === computerChoice) {
     return 'Result: Tie';
   }
-  if (userChoice === 'rock') {
-    if (computerChoice === 'paper') {
-      return 'Result: Computer won'
-    } else {
-      return 'Result: User won';  
-    }
-  }
-  if (userChoice === 'paper') {
-    if (computerChoice === 'scissors') {
-      return 'Result: Computer won'
-    } else {
-      return 'Result: User won';
-    }
-  }
-  if (userChoice === 'scissors') {
-    if (computerChoice === 'rock') {
-      return 'Result: Computer won';
-    } else {
-      return 'Result: User won';
-    }
-  }
-  if (userChoice === 'bomb') {
-    return 'Result: User won';
-  }
+  // QUESTION WHY CANNOT USE && IN PLACE OF NESTED IF
+
+if (userChoice === 'rock' && computerChoice === 'scissor' ||
+    userChoice === 'paper' && computerChoice === 'rock' ||
+    userChoice === 'scissors' && computerChoice === 'paper' ||
+    userChoice === 'bomb') {
+  return 'User won';
+} 
+return 'Computer won';
+
 }
+
+
+  // if (userChoice === 'rock') {
+  //   if (computerChoice === 'paper') {
+  //     return 'Result: Computer won'
+  //   } else {
+  //     return 'Result: User won';  
+  //   }
+  // }
+  // if (userChoice === 'paper') {
+  //   if (computerChoice === 'scissors') {
+  //     return 'Result: Computer won'
+  //   } else {
+  //     return 'Result: User won';
+  //   }
+  // }
+  // if (userChoice === 'scissors') {
+  //   if (computerChoice === 'rock') {
+  //     return 'Result: Computer won';
+  //   } else {
+  //     return 'Result: User won';
+  //   }
+  // }
+  // if (userChoice === 'bomb') {
+  //   return 'Result: User won';
+  // }
+
 
 // Test
 console.log('Testing determineWinner function.');
 console.log(determineWinner('rock', 'paper'));
 
 const initGame = () => {
-  const userChoice = getUserChoice('rock'); // needs to return true in order to go to next line of code
+  const userChoice = getUserChoice('paper'); // needs to return true in order to go to next line of code
   const computerChoice = getComputerChoice();
   console.log(`User choice: ${userChoice}.\nComputer choice: ${computerChoice}.`);
   const result = determineWinner(userChoice, computerChoice);
@@ -113,6 +126,9 @@ const initGame = () => {
 }
 
 initGame();
+
+
+
 
 
 
